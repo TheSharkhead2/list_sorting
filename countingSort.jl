@@ -54,4 +54,21 @@ if ARGS[1] == "test"
     else
         println("This is unfortunate")
     end
+
+else #if we don't see test in the first argument, assume we are testing scenarios
+    #get list and range in arguments
+    listRange = parse(Int, ARGS[1])
+    listLength = parse(Int, ARGS[2])
+
+    testVector = rand(1:listRange, listLength-2) #create random test vector of specified length minus two 
+
+    #add last to entries to list to ensure the right range. This will be 1 and the max range
+    append!(testVector, [1, listRange]) 
+
+    beginTime = time() #get start time 
+    sortedList = countingSort(testVector) #sort list 
+    totalTime = time() - beginTime #get total time 
+
+    println("With a range of $listRange and a length of $listLength, it took $totalTime seconds")
+
 end
