@@ -1,0 +1,1 @@
+This is a quick project to compare the relative speeds of the best and worse case sorting algorithms
