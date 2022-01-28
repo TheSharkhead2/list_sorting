@@ -105,10 +105,10 @@ function insert!(x, tree)
         end
 
         #if left depth - right depth is greater than 1, node is unbalanced and we need to perform a series of rotations
-        if subTree.lDepth - subTree.rDepth > 1
+        if subTree.lDepth - subTree.rDepth > 1 && index > 3 #need index greater than three for cheap fix to indexing at 0 (which shouldn't be possible?)
 
             #need to find what type of rotations are necessary 
-            if SubTreeDirectionList[index - 1] == "left" && SubTreeDirectionList[index-2] == "left" #left left case. Looking at direction from this subtree and direction from that subtree (towards inserted node)
+            if SubTreeDirectionList[index-1] == "left" && SubTreeDirectionList[index-2] == "left" #left left case. Looking at direction from this subtree and direction from that subtree (towards inserted node)
                 #perform right rotation on subtree 
                 rightRotate!(subTree)
 
@@ -379,4 +379,42 @@ function theo_sort(list)
 
 end
 
-println(theo_sort(rand(1:100, 100)))
+#if the first argument is test, then testing random list vs my algorithm
+if ARGS[1] == "test"
+    testList = rand(1:1000, parse(Int, ARGS[2])) #generate random list of size ARGS[2]
+
+    startTimeJulia = time() #start timer for julia sort
+    sortedList = sort(testList) #sort list using julia sort
+    endTimeJulia = time() #end timer for julia sort
+
+    juliaTime = endTimeJulia - startTimeJulia #calculate time taken for julia sort
+
+    startTimeTheo = time() #start timer for theo sort
+    sortedListTheo = theo_sort(testList) #sort list using theo sort
+    endTimeTheo = time() #end timer for theo sort
+
+    
+    theoTime = endTimeTheo - startTimeTheo #calculate time taken for theo sort
+
+    if sortedList == sortedListTheo #if the two lists are the same, then theo sort is correct
+        println("Theo sort is correct")
+    else #otherwise, theo sort is incorrect
+        println("Theo sort is incorrect")
+    end
+
+    println("The Julia sorting algorithm took $juliaTime seconds and my algorithm took $theoTime seconds to sort ", ARGS[2], " items.") #print time taken for julia sort vs theo sort
+
+elseif ARGS[1] == "insert" #test inserting speed 
+    testList = rand(1:1000, parse(Int, ARGS[2])) #generate random list of size ARGS[2]
+
+    testBinaryTree = generate_tree(testList) #generate tree from list
+
+    insertNumber = rand(1:1000) #generate random number to insert
+
+    startTime = time() #record start time 
+    insert!(insertNumber, testBinaryTree) #insert number into tree 
+    timeTaken = time() - startTime #get time taken 
+
+    println("It took $timeTaken seconds to insert 1 item into a binary tree of ", ARGS[2], " items.") #print time taken to insert item
+
+end
