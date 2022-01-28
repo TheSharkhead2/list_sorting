@@ -7,21 +7,20 @@ mutable struct Tree
     rDepth::Int32 #depth of right child (this doesn't update all the time and will probably be wrong most of the time)
 end
 
+"""
+Insert element x into a tree
+
+Parameters
+----------
+
+x : Float64
+    Float to be inserted into tree
+
+tree : Tree
+    Tree to insert item into
+
+"""
 function insert!(x, tree)
-    """
-    Insert element x into a tree
-
-    Parameters
-    ----------
-
-    x : Float64
-        Float to be inserted into tree
-
-    tree : Tree
-        Tree to insert item into
-
-    """
-
 
     itemInserted = false #bool for while loop
 
@@ -140,18 +139,17 @@ function insert!(x, tree)
 
 end
 
+"""
+Performs a right rotation on a tree
 
+Parameters
+----------
+
+tree : Tree                             
+    Tree to rotate
+
+"""
 function rightRotate!(tree)
-    """
-    Performs a right rotation on a tree
-
-    Parameters
-    ----------
-
-    tree : Tree                             
-        Tree to rotate
-
-    """
 
     tempLeft = tree.lChild #save left child
 
@@ -190,18 +188,18 @@ function rightRotate!(tree)
 
 end
 
+"""
+Performs a left rotation on a tree
+
+Parameters
+----------
+
+tree : Tree                             
+    Tree to rotate
+
+"""
 function leftRotate!(tree)
-    """
-    Performs a left rotation on a tree
-
-    Parameters
-    ----------
-
-    tree : Tree                             
-        Tree to rotate
-
-    """
-
+    
     tempRight = tree.rChild #save right child
 
     tempLeft = tree.lChild #save left child
@@ -239,23 +237,23 @@ function leftRotate!(tree)
 
 end
 
+""" 
+Removes the minimum value from a tree and returns it 
+
+Parameters
+----------
+
+tree : Tree
+    Tree to remove minimum value from
+
+Returns
+-------
+
+min : Float64
+    Minimum value in tree
+
+"""
 function delete_min(tree)
-    """ 
-    Removes the minimum value from a tree and returns it 
-
-    Parameters
-    ----------
-
-    tree : Tree
-        Tree to remove minimum value from
-
-    Returns
-    -------
-
-    min : Float64
-        Minimum value in tree
-
-    """
 
     if tree.lChild == nothing && tree.rChild == nothing #when tree is only one remaining value, return that value 
         min = tree.value
@@ -315,23 +313,23 @@ function delete_min(tree)
 
 end
 
+"""
+Generates a balanced binary tree (using AVL trees) from a list
+
+Parameters
+----------
+
+list : List
+    List to generate tree from
+
+Returns
+-------
+
+tree : Tree
+    Balanced binary tree
+
+"""
 function generate_tree(list)
-    """
-    Generates a balanced binary tree (using AVL trees) from a list
-
-    Parameters
-    ----------
-
-    list : List
-        List to generate tree from
-
-    Returns
-    -------
-
-    tree : Tree
-        Balanced binary tree
-
-    """
 
     binaryTree = Tree(list[1], nothing, nothing, 0, 0) #create blank tree with just first item
 
@@ -345,26 +343,26 @@ function generate_tree(list)
 
 end
 
+"""
+Performs a sorting algorithm which I sort of just made up (but used a
+webpage on AVL trees to help me). This is an entirely custom algorithm
+as I didn't look at any code snippets to create it, I just used the
+description of the algorithm.
+
+Parameters
+----------
+
+list : List
+    List to sort
+
+Returns
+-------
+
+sortedList : List
+    Sorted list
+
+"""
 function theo_sort(list)
-    """
-    Performs a sorting algorithm which I sort of just made up (but used a
-    webpage on AVL trees to help me). This is an entirely custom algorithm
-    as I didn't look at any code snippets to create it, I just used the
-    description of the algorithm.
-
-    Parameters
-    ----------
-
-    list : List
-        List to sort
-
-    Returns
-    -------
-
-    sortedList : List
-        Sorted list
-
-    """
 
     binaryTree = generate_tree(list) #generate tree from list
 
